@@ -1,9 +1,10 @@
 <?php
 
 namespace Database\Seeders;
-
+use illuminate\Support\Facades\DB;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,5 +20,6 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+        $this->call([bookshelfseeder::class]);
     }
 }
