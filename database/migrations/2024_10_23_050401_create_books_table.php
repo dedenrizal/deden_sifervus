@@ -15,25 +15,25 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('author');
-            $table->string('years');
+            $table->year('year');
             $table->string('publisher');
             $table->string('city');
             $table->string('cover');
             $table->unsignedBigInteger('bookshelf_id');
             $table->timestamps();
 
-            $table->foreign('bookshelf_id')->references('id')->on('bookshelfs')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('bookshelf_id')->references('id')->on('bookshelfs')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
-    }
+    } // php artisan migrate:fresh
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-
-        schema::table('book',function (Blueprint $table) {
-            $table->dropConstrainedForeignId('bookshelfs_id');
+        Schema::table('books', function (Blueprint $table) {
+            $table->dropConstrainedForeignId('bookshelf_id');
         });
         Schema::dropIfExists('books');
     }

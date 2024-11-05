@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bookshelfs', function (Blueprint $table) {
+        Schema::create('returns', function (Blueprint $table) {
             $table->id();
-            $table->string('code', 10);
-            $table->string('name');
+            $table->unsignedBigInteger('loan_detail_id');
             $table->timestamps();
+            $table->foreign('loan_detail_id')->references('id')->on('loans')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -24,6 +24,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bookshelfs');
+        Schema::table('returns', function (Blueprint $table) {
+            $table->dropForeign(['loan_detail_id']);
+        });
+        Schema::dropIfExists('returns');
     }
 };
